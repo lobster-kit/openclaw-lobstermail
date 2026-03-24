@@ -33,11 +33,11 @@ jobs:
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           gh release create "$GITHUB_REF_NAME" \
-            --title "openclaw-lobstermail@${VERSION}" \
+            --title "@lobsterkit/openclaw-lobstermail@${VERSION}" \
             --notes "## Install
 
           \`\`\`bash
-          openclaw plugins install openclaw-lobstermail
+          openclaw plugins install @lobsterkit/openclaw-lobstermail
           \`\`\`
 
           See [README](https://github.com/lobster-kit/openclaw-lobstermail#readme) for usage."

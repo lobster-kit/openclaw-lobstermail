@@ -1,5 +1,5 @@
 {
-  "name": "openclaw-lobstermail",
+  "name": "@lobsterkit/openclaw-lobstermail",
   "version": "1.5.1",
   "description": "OpenClaw plugin for LobsterMail — email for AI agents",
   "type": "module",
@@ -27,7 +27,8 @@
     "extensions": ["./index.ts"]
   },
   "dependencies": {
-    "@lobsterkit/lobstermail": "^1.7.0"
+    "@lobsterkit/lobstermail": "^1.7.0",
+    "@sinclair/typebox": "^0.34.0"
   },
   "peerDependencies": {
     "openclaw": ">=1.0.0"

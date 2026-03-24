@@ -5,7 +5,7 @@ OpenClaw community plugin for [LobsterMail](https://lobstermail.ai) — email fo
 ## Install
 
 ```bash
-openclaw plugins install openclaw-lobstermail
+openclaw plugins install @lobsterkit/openclaw-lobstermail
 ```
 
 ## What it does
