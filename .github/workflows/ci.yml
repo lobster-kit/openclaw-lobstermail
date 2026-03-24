@@ -17,7 +17,4 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm install
-      - name: Verify plugin manifest
-        run: node -e "JSON.parse(require('fs').readFileSync('openclaw.plugin.json','utf8'))"
-      - name: Verify package.json openclaw block
-        run: node -e "const p=JSON.parse(require('fs').readFileSync('package.json','utf8')); if(!p.openclaw?.extensions) throw new Error('missing openclaw.extensions')"
+      - run: npm test

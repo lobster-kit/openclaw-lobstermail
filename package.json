@@ -33,6 +33,12 @@
   "peerDependencies": {
     "openclaw": ">=1.0.0"
   },
+  "devDependencies": {
+    "vitest": "^3.1.0"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
   "publishConfig": {
     "access": "public"
   }
