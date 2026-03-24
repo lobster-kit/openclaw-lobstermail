@@ -1,0 +1,43 @@
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: ci
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm install -g npm@latest
+      - run: npm install
+      - name: Publish to npm
+        run: npm publish --access public --provenance
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          gh release create "$GITHUB_REF_NAME" \
+            --title "openclaw-lobstermail@${VERSION}" \
+            --notes "## Install
+
+          \`\`\`bash
+          openclaw plugins install openclaw-lobstermail
+          \`\`\`
+
+          See [README](https://github.com/lobster-kit/openclaw-lobstermail#readme) for usage."

@@ -1,0 +1,38 @@
+{
+  "name": "openclaw-lobstermail",
+  "version": "1.0.0",
+  "description": "OpenClaw plugin for LobsterMail — email for AI agents",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lobster-kit/openclaw-lobstermail"
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "lobstermail",
+    "email",
+    "mcp",
+    "ai",
+    "agent"
+  ],
+  "files": [
+    "index.ts",
+    "openclaw.plugin.json",
+    "skills",
+    "README.md"
+  ],
+  "openclaw": {
+    "extensions": ["./index.ts"]
+  },
+  "dependencies": {
+    "@lobsterkit/lobstermail": "^1.7.0"
+  },
+  "peerDependencies": {
+    "openclaw": ">=1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

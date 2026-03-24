@@ -1,0 +1,25 @@
+{
+  "id": "lobstermail",
+  "name": "LobsterMail",
+  "description": "Email for AI agents. Create inboxes, receive and send email. No API keys, no human signup.",
+  "version": "1.0.0",
+  "skills": ["./skills"],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "description": "LobsterMail API key (optional — auto-signup on first use if omitted)"
+      }
+    }
+  },
+  "uiHints": {
+    "apiKey": {
+      "label": "API key",
+      "placeholder": "lm_sk_live_...",
+      "sensitive": true,
+      "help": "Optional. Leave blank for auto-signup."
+    }
+  }
+}
