@@ -2,7 +2,7 @@
   "id": "lobstermail",
   "name": "LobsterMail",
   "description": "Email for AI agents. Create inboxes, receive and send email. No API keys, no human signup.",
-  "version": "1.0.0",
+  "version": "1.5.1",
   "skills": ["./skills"],
   "configSchema": {
     "type": "object",
