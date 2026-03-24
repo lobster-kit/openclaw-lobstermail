@@ -1,0 +1,58 @@
+name: Receive Skills
+
+on:
+  repository_dispatch:
+    types: [skill-update]
+
+jobs:
+  update:
+    name: Update skill and bump version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write clawhub skill
+        run: |
+          mkdir -p skills
+          cat <<'SKILL_EOF' > skills/SKILL.md
+          ${{ github.event.client_payload.skills.clawhub }}
+          SKILL_EOF
+
+      - name: Extract version from skill frontmatter
+        id: version
+        run: |
+          VERSION=$(grep -m1 '^version:' skills/SKILL.md | sed 's/version: *//')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Sync version to package.json and manifest
+        if: steps.version.outputs.version != ''
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          npm version "$VERSION" --no-git-tag-version --allow-same-version 2>/dev/null || true
+          # Also update openclaw.plugin.json version
+          node -e "
+            const fs = require('fs');
+            const m = JSON.parse(fs.readFileSync('openclaw.plugin.json','utf8'));
+            m.version = '$VERSION';
+            fs.writeFileSync('openclaw.plugin.json', JSON.stringify(m, null, 2) + '\n');
+          "
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "lobsterkit-bot"
+          git config user.email "bot@lobsterkit.dev"
+          git add skills/ package.json openclaw.plugin.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            VERSION="${{ steps.version.outputs.version }}"
+            git commit -m "[auto] sync skills from ${{ github.event.client_payload.source }} (${{ github.event.client_payload.sha }})"
+            git push
+            # Tag to trigger publish workflow
+            if [ -n "$VERSION" ]; then
+              git tag "v$VERSION"
+              git push origin "v$VERSION"
+            fi
+          fi
